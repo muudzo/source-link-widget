@@ -11,8 +11,32 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('link_tables', function (Blueprint $table) {
+        // Categories Table
+        Schema::create('link_categories', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('slug')->unique();
+            $table->string('color')->nullable();
+            $table->text('description')->nullable();
+            $table->timestamps();
+        });
+
+        // Links Table
+        Schema::create('links', function (Blueprint $table) {
+            $table->id();
+            $table->string('title');
+            $table->text('url');
+            $table->text('description')->nullable();
+            $table->string('favicon')->nullable();
+            $table->boolean('is_active')->default(true);
+            $table->timestamps();
+        });
+
+        // Link-Category Relationship (Many-to-Many)
+        Schema::create('link_category', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('link_id')->constrained()->onDelete('cascade');
+            $table->foreignId('link_category_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -22,6 +46,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('link_tables');
+        Schema::dropIfExists('link_category');
+        Schema::dropIfExists('links');
+        Schema::dropIfExists('link_categories');
     }
 };
