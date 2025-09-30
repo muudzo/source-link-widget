@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Source Link Widget</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Source Link Widget</h1>
+            <p>Save your current page</p>
+        </div>
+        
+        <div class="form-section">
+            <div class="input-group">
+                <label for="title">Title:</label>
+                <input type="text" id="title" placeholder="Page title">
+            </div>
+            
+            <div class="input-group">
+                <label for="description">Description:</label>
+                <textarea id="description" placeholder="Add a description (optional)"></textarea>
+            </div>
+            
+            <div class="input-group">
+                <label for="category">Category:</label>
+                <select id="category">
+                    <option value="">Select a category</option>
+                </select>
+            </div>
+            
+            <div class="button-group">
+                <button id="saveLink" class="btn btn-primary">Save Link</button>
+                <button id="viewLinks" class="btn btn-secondary">View All Links</button>
+            </div>
+        </div>
+        
+        <div class="status" id="status"></div>
+    </div>
+    
+    <script src="popup.js"></script>
+</body>
+</html>

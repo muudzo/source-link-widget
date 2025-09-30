@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Source Link Widget - Setup</title>
+    <link rel="stylesheet" href="popup.css">
+    <style>
+        body {
+            width: 400px;
+            min-height: 500px;
+        }
+        .setup-step {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            background: #f9f9f9;
+        }
+        .step-number {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            background: #007bff;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 24px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .code-block {
+            background: #f4f4f4;
+            padding: 10px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 12px;
+            margin: 10px 0;
+            word-break: break-all;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Welcome to Source Link Widget!</h1>
+            <p>Follow these steps to get started</p>
+        </div>
+        
+        <div class="setup-step">
+            <div>
+                <span class="step-number">1</span>
+                <strong>Start your Laravel server</strong>
+            </div>
+            <p>Make sure your Laravel application is running:</p>
+            <div class="code-block">php artisan serve</div>
+            <p>Your server should be running at <code>http://localhost:8000</code></p>
+        </div>
+        
+        <div class="setup-step">
+            <div>
+                <span class="step-number">2</span>
+                <strong>Run database migrations</strong>
+            </div>
+            <p>Make sure your database is set up:</p>
+            <div class="code-block">php artisan migrate</div>
+        </div>
+        
+        <div class="setup-step">
+            <div>
+                <span class="step-number">3</span>
+                <strong>Create some categories (optional)</strong>
+            </div>
+            <p>Visit <a href="http://localhost:8000/categories" target="_blank">http://localhost:8000/categories</a> to create link categories.</p>
+        </div>
+        
+        <div class="setup-step">
+            <div>
+                <span class="step-number">4</span>
+                <strong>Start saving links!</strong>
+            </div>
+            <p>Click the extension icon in your browser toolbar to save the current page.</p>
+        </div>
+        
+        <div class="button-group">
+            <button id="openLinksPage" class="btn btn-primary">View My Links</button>
+            <button id="closeSetup" class="btn btn-secondary">Close</button>
+        </div>
+    </div>
+    
+    <script>
+        document.getElementById('openLinksPage').addEventListener('click', function() {
+            chrome.tabs.create({ url: 'http://localhost:8000/links' });
+        });
+        
+        document.getElementById('closeSetup').addEventListener('click', function() {
+            window.close();
+        });
+    </script>
+</body>
+</html>

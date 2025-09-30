@@ -1,66 +1,206 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Source Link Widget
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Never forget where your links came from! This browser extension and web application helps you save, organize, and manage your browsing sources.
 
-## About Laravel
+## Features
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- 🚀 **Browser Extension**: Save links directly from any webpage
+- 📁 **Categories**: Organize your links with custom categories
+- 🔍 **Search & Filter**: Find your saved links quickly
+- 🎨 **Modern UI**: Clean, responsive interface
+- 💾 **Local Storage**: All data stored in your Laravel application
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Installation
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 1. Laravel Application Setup
 
-## Learning Laravel
+1. **Install dependencies:**
+   ```bash
+   composer install
+   npm install
+   ```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+2. **Set up environment:**
+   ```bash
+   cp .env.example .env
+   php artisan key:generate
+   ```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+3. **Configure database:**
+   - Update your `.env` file with database credentials
+   - Or use SQLite (already configured): `touch database/database.sqlite`
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+4. **Run migrations:**
+   ```bash
+   php artisan migrate
+   ```
 
-## Laravel Sponsors
+5. **Start the server:**
+   ```bash
+   php artisan serve
+   ```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### 2. Browser Extension Setup
 
-### Premium Partners
+1. **Open Chrome/Edge:**
+   - Go to `chrome://extensions/` (Chrome) or `edge://extensions/` (Edge)
+   - Enable "Developer mode"
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+2. **Load the extension:**
+   - Click "Load unpacked"
+   - Select the `browser-extension` folder from this project
+
+3. **Configure the extension:**
+   - Update the `API_BASE_URL` in `browser-extension/popup.js` if your server runs on a different port
+   - The default is `http://localhost:8000`
+
+## Usage
+
+### Browser Extension
+
+1. **Save a link:**
+   - Click the extension icon in your browser toolbar
+   - The current page title and URL will be automatically filled
+   - Add a description and select a category (optional)
+   - Click "Save Link"
+
+2. **View all links:**
+   - Click "View All Links" in the extension popup
+   - This opens the web interface
+
+### Web Interface
+
+1. **Access the interface:**
+   - Visit `http://localhost:8000/links`
+   - Or click "View All Links" in the extension
+
+2. **Manage links:**
+   - Search and filter your saved links
+   - Edit or delete existing links
+   - Create new categories
+
+3. **Categories:**
+   - Visit `http://localhost:8000/categories`
+   - Create categories to organize your links
+
+## API Endpoints
+
+The application provides REST API endpoints for the browser extension:
+
+- `GET /api/categories` - List all categories
+- `POST /api/categories` - Create a new category
+- `GET /api/links` - List all links
+- `POST /api/links` - Create a new link
+- `GET /api/links/{id}` - Get a specific link
+- `PUT /api/links/{id}` - Update a link
+- `DELETE /api/links/{id}` - Delete a link
+
+## File Structure
+
+```
+source-link-widget/
+├── app/
+│   ├── Http/Controllers/
+│   │   ├── LinkController.php
+│   │   └── LinkCategoryController.php
+│   └── Models/
+│       ├── Link.php
+│       └── LinkCategory.php
+├── browser-extension/
+│   ├── manifest.json
+│   ├── popup.html
+│   ├── popup.css
+│   ├── popup.js
+│   ├── content.js
+│   ├── background.js
+│   └── setup.html
+├── database/migrations/
+│   └── 2025_04_15_125127_create_link_tables.php
+├── resources/views/links/
+│   ├── index.blade.php
+│   ├── create.blade.php
+│   ├── edit.blade.php
+│   └── show.blade.php
+└── routes/web.php
+```
+
+## Development
+
+### Adding New Features
+
+1. **Backend (Laravel):**
+   - Add new routes in `routes/web.php`
+   - Create controllers and models as needed
+   - Update database migrations
+
+2. **Frontend (Browser Extension):**
+   - Modify `popup.js` for extension functionality
+   - Update `popup.html` and `popup.css` for UI changes
+   - Use `content.js` for page interaction features
+
+3. **Web Interface:**
+   - Create new Blade templates in `resources/views/`
+   - Add JavaScript for interactive features
+
+### Database Schema
+
+**Links Table:**
+- `id` - Primary key
+- `title` - Link title
+- `url` - Link URL
+- `description` - Optional description
+- `favicon` - Favicon URL
+- `is_active` - Active status
+- `created_at`, `updated_at` - Timestamps
+
+**Categories Table:**
+- `id` - Primary key
+- `name` - Category name
+- `slug` - URL-friendly name
+- `color` - Category color (optional)
+- `description` - Category description
+- `created_at`, `updated_at` - Timestamps
+
+**Link-Category Pivot Table:**
+- `link_id` - Foreign key to links
+- `link_category_id` - Foreign key to categories
+
+## Troubleshooting
+
+### Extension Not Working
+
+1. **Check server connection:**
+   - Ensure Laravel server is running on `http://localhost:8000`
+   - Test API endpoints in browser
+
+2. **Check extension permissions:**
+   - Verify manifest.json permissions
+   - Check browser console for errors
+
+3. **CORS issues:**
+   - Add CORS headers to Laravel if needed
+   - Check browser network tab for failed requests
+
+### Database Issues
+
+1. **Migration errors:**
+   ```bash
+   php artisan migrate:reset
+   php artisan migrate
+   ```
+
+2. **SQLite issues:**
+   - Ensure `database/database.sqlite` file exists
+   - Check file permissions
 
 ## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This project is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
